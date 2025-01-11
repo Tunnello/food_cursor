@@ -138,12 +138,35 @@ Page({
 
     if (selectedIngredients.length === 0) {
       this.setData({ recommendedDishes: [] })
+      wx.showToast({
+        title: '请先选择食材',
+        icon: 'none'
+      })
+      return
     }
+
+    // 获取选中食材的名称列表
+    const ingredientNames = selectedIngredients.map(item => item.name)
+    
+    // 调用生成菜品方法
+    this.generateDishes(ingredientNames)
   },
 
   generateDishes: function(ingredients) {
+    // 如果没有选择食材，直接返回
+    if (!ingredients || ingredients.length === 0) {
+      wx.showToast({
+        title: '请先选择食材',
+        icon: 'none'
+      })
+      return
+    }
+
     const currentGenerator = this.data.generators[this.data.currentGeneratorIndex]
     const apiConfig = app.globalData.apiConfigs[currentGenerator.id]
+
+    console.log('选中的食材:', ingredients)
+    console.log('当前使用的生成器:', currentGenerator.name)
 
     const prompt = `我有以下食材：${ingredients.join('、')}。
 请推荐5道可以用这些食材烹饪的菜品。对于每道菜品：
@@ -238,14 +261,27 @@ Page({
       header: apiConfig.headers,
       data: requestData,
       success: (res) => {
+        // 添加更详细的响应日志
+        console.log('API响应状态码:', res.statusCode)
+        console.log('API响应头:', res.header)
+        console.log('API响应数据类型:', typeof res.data)
         console.log('API返回原始数据:', res.data)
         
         try {
           if (currentGenerator.id === 'yuanqi') {
+            if (!res.data || !res.data.choices || !res.data.choices[0] || !res.data.choices[0].message) {
+              throw new Error('Invalid response format from yuanqi API')
+            }
             const content = res.data.choices[0].message.content
             this.processResponse(content)
             wx.hideLoading()
           } else if (currentGenerator.id === 'coze') {
+            // 检查响应格式
+            if (!res.data) {
+              console.error('Empty response data')
+              throw new Error('Empty response data')
+            }
+
             // 处理流式响应
             const responseText = res.data
             console.log('流式响应文本:', responseText)
@@ -312,21 +348,33 @@ Page({
             wx.hideLoading()
           }
         } catch (error) {
-          console.error('解析菜品数据失败:', error)
+          console.error('解析菜品数据失败:', error, {
+            generator: currentGenerator.id,
+            responseData: res.data
+          })
           wx.showToast({
-            title: '生成菜品失败',
-            icon: 'none'
+            title: '生成菜品失败: ' + error.message,
+            icon: 'none',
+            duration: 3000
           })
           wx.hideLoading()
         }
       },
       fail: (error) => {
-        console.error('API调用失败:', error)
-        wx.showToast({
-          title: '网络请求失败',
-          icon: 'none',
-          duration: 2000
+        console.error('API调用失败:', error, {
+          url: apiConfig.url,
+          method: 'POST',
+          headers: apiConfig.headers
         })
+        wx.showToast({
+          title: '网络请求失败: ' + error.errMsg,
+          icon: 'none',
+          duration: 3000
+        })
+        wx.hideLoading()
+      },
+      complete: () => {
+        // 确保在任何情况下都会隐藏加载提示
         wx.hideLoading()
       }
     }
@@ -335,6 +383,13 @@ Page({
     wx.showLoading({
       title: '生成菜品中...',
       mask: true
+    })
+
+    console.log('发送API请求:', {
+      url: apiConfig.url,
+      method: 'POST',
+      headers: apiConfig.headers,
+      data: requestData
     })
 
     // 发送请求

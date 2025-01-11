@@ -29,28 +29,88 @@ App({
     this.globalData = {
       ingredients: {
         vegetables: [
-          { id: 1, name: '土豆', image: 'https://upload.wikimedia.org/wikipedia/commons/6/60/Patates.jpg', selected: false },
-          { id: 2, name: '胡萝卜', image: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Carrot.jpg', selected: false },
-          { id: 3, name: '青椒', image: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Bell_pepper.jpg', selected: false },
-          { id: 4, name: '茄子', image: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/Eggplant.jpg', selected: false },
-          { id: 5, name: '白菜', image: 'https://upload.wikimedia.org/wikipedia/commons/3/3a/Napa_cabbage.jpg', selected: false },
-          { id: 6, name: '韭菜', image: 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Allium_tuberosum.jpg', selected: false },
-          { id: 7, name: '豆芽', image: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Bean_sprouts.jpg', selected: false },
-          { id: 8, name: '莴笋', image: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Lettuce.jpg', selected: false }
+          { 
+            id: 'tomato',
+            name: '番茄',
+            image: '/images/vegetables/tomato.jpg',
+            selected: false
+          },
+          {
+            id: 'potato',
+            name: '土豆',
+            image: '/images/vegetables/potato.jpg',
+            selected: false
+          },
+          {
+            id: 'cabbage',
+            name: '白菜',
+            image: '/images/vegetables/cabbage.jpg',
+            selected: false
+          },
+          {
+            id: 'pepper',
+            name: '青椒',
+            image: '/images/vegetables/pepper.jpg',
+            selected: false
+          },
+          {
+            id: 'eggplant',
+            name: '茄子',
+            image: '/images/vegetables/eggplant.jpg',
+            selected: false
+          },
+          {
+            id: 'carrot',
+            name: '胡萝卜',
+            image: '/images/vegetables/carrot.png',
+            selected: false
+          }
         ],
         meat: [
-          { id: 11, name: '猪肉', image: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Pork.jpg', selected: false },
-          { id: 12, name: '鸡肉', image: 'https://upload.wikimedia.org/wikipedia/commons/3/3a/Chicken.jpg', selected: false },
-          { id: 13, name: '牛肉', image: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/Beef.jpg', selected: false },
-          { id: 14, name: '羊肉', image: 'https://upload.wikimedia.org/wikipedia/commons/1/1e/Lamb.jpg', selected: false },
-          { id: 15, name: '鱼', image: 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Fish.jpg', selected: false }
+          {
+            id: 'pork',
+            name: '猪肉',
+            image: '/images/meats/pork.png',
+            selected: false
+          },
+          {
+            id: 'chicken',
+            name: '鸡肉',
+            image: '/images/meats/chicken.jpg',
+            selected: false
+          },
+          {
+            id: 'beef',
+            name: '牛肉',
+            image: '/images/meats/beef.jpg',
+            selected: false
+          },
+          {
+            id: 'fish',
+            name: '鱼',
+            image: '/images/meats/fish.jpg',
+            selected: false
+          }
         ],
         condiments: [
-          { id: 21, name: '葱', image: 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Scallions.jpg', selected: false },
-          { id: 22, name: '姜', image: 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Ginger.jpg', selected: false },
-          { id: 23, name: '蒜', image: 'https://upload.wikimedia.org/wikipedia/commons/8/8c/Garlic.jpg', selected: false },
-          { id: 24, name: '花椒', image: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Sichuan_pepper.jpg', selected: false },
-          { id: 25, name: '桂皮', image: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Cinnamon.jpg', selected: false }
+          {
+            id: 'scallion',
+            name: '葱',
+            image: '/images/condiments/scallion.png',
+            selected: false
+          },
+          {
+            id: 'ginger',
+            name: '姜',
+            image: '/images/condiments/ginger.png',
+            selected: false
+          },
+          {
+            id: 'garlic',
+            name: '蒜',
+            image: '/images/condiments/garlic.png',
+            selected: false
+          }
         ]
       },
       dishes: [],
@@ -61,7 +121,8 @@ App({
           headers: {
             'X-Source': 'openapi',
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${envConfig.YUANQI_API_TOKEN || ''}`
+            'Authorization': `Bearer ${envConfig.YUANQI_API_TOKEN || ''}`,
+            'Access-Control-Allow-Origin': '*'
           },
           assistant_id: 'XgIHxucOhOTJ',
           user_id: '123'
@@ -71,7 +132,8 @@ App({
           url: 'https://api.coze.cn/v3/chat',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${envConfig.COZE_API_TOKEN || ''}`
+            'Authorization': `Bearer ${envConfig.COZE_API_TOKEN || ''}`,
+            'Access-Control-Allow-Origin': '*'
           },
           bot_id: '7456266070911909907',
           user_id: '1874008646361327'
