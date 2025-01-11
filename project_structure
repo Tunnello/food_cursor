@@ -1,0 +1,13 @@
+food_cursor_1/
+├── pages/
+│   └── index/
+│       ├── index.js
+│       ├── index.json
+│       ├── index.wxml
+│       └── index.wxss
+├── images/
+│   └── ingredients.jpg
+├── app.js
+├── app.json
+├── app.wxss
+└── project.config.json 

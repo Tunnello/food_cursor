@@ -1,0 +1,172 @@
+<view class="container">
+  <view class="ingredients-section">
+    <view class="section-title">食材</view>
+    
+    <!-- 蔬菜类 -->
+    <view class="ingredient-category">
+      <view class="category-title">蔬菜类</view>
+      <scroll-view class="ingredients-scroll" scroll-x="true" enhanced="true" show-scrollbar="false">
+        <view class="ingredients-grid">
+          <view class="ingredient-item {{item.selected ? 'selected' : ''}}" 
+                wx:for="{{ingredients.vegetables}}" 
+                wx:key="id"
+                bindtap="toggleIngredient"
+                data-id="{{item.id}}"
+                data-category="vegetables">
+            <image src="{{item.image}}" mode="aspectFit"/>
+            <text>{{item.name}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 荤菜类 -->
+    <view class="ingredient-category">
+      <view class="category-title">荤菜类</view>
+      <scroll-view class="ingredients-scroll" scroll-x="true" enhanced="true" show-scrollbar="false">
+        <view class="ingredients-grid">
+          <view class="ingredient-item {{item.selected ? 'selected' : ''}}" 
+                wx:for="{{ingredients.meat}}" 
+                wx:key="id"
+                bindtap="toggleIngredient"
+                data-id="{{item.id}}"
+                data-category="meat">
+            <image src="{{item.image}}" mode="aspectFit"/>
+            <text>{{item.name}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 调料类 -->
+    <view class="ingredient-category">
+      <view class="category-title">调料类</view>
+      <scroll-view class="ingredients-scroll" scroll-x="true" enhanced="true" show-scrollbar="false">
+        <view class="ingredients-grid">
+          <view class="ingredient-item {{item.selected ? 'selected' : ''}}" 
+                wx:for="{{ingredients.condiments}}" 
+                wx:key="id"
+                bindtap="toggleIngredient"
+                data-id="{{item.id}}"
+                data-category="condiments">
+            <image src="{{item.image}}" mode="aspectFit"/>
+            <text>{{item.name}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 确定按钮 -->
+    <view class="action-bar">
+      <view class="generator-selector">
+        <picker bindchange="onGeneratorChange" value="{{currentGeneratorIndex}}" range="{{generators}}" range-key="name">
+          <view class="generator-picker">
+            <text>{{generators[currentGeneratorIndex].name}}</text>
+            <text class="picker-arrow">▼</text>
+          </view>
+        </picker>
+      </view>
+      <view class="confirm-button" bindtap="generateDishesWithSelected">
+        生成菜品推荐
+      </view>
+    </view>
+  </view>
+
+  <view class="dishes-section">
+    <view class="section-title">菜品</view>
+    <view class="dishes-list">
+      <view wx:if="{{!recommendedDishes.length && loading}}" class="loading-tips">
+        正在生成菜品推荐...
+      </view>
+      <view wx:elif="{{!recommendedDishes.length}}" class="empty-tips">
+        请选择食材获取推荐菜品
+      </view>
+      <view class="dish-item" 
+            wx:for="{{recommendedDishes}}" 
+            wx:key="id"
+            bindtap="showDatePicker"
+            data-dish="{{item}}">
+        <view class="dish-content">
+          <view class="dish-image-container">
+            <image src="{{item.image}}" mode="aspectFill"/>
+            <text class="dish-name">{{item.name}}</text>
+          </view>
+          <view class="dish-description">
+            <view class="description-title">烹饪步骤：</view>
+            <scroll-view class="cooking-steps" scroll-y="true" enhanced="true" show-scrollbar="true">
+              <view class="step-item" wx:for="{{item.description}}" wx:for-item="step" wx:key="index">
+                <text class="step-number">{{index + 1}}.</text>
+                <text class="step-text">{{step}}</text>
+              </view>
+              <view class="video-preview" 
+                    wx:if="{{item.video}}" 
+                    catchtap="openVideo" 
+                    data-video="{{item.video}}">
+                <view class="video-info">
+                  <view class="video-platform">{{item.video.platform}}</view>
+                  <view class="video-title">{{item.video.title}}</view>
+                </view>
+                <view class="video-icon">▶</view>
+              </view>
+            </scroll-view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="calendar-section">
+    <view class="section-title">菜单</view>
+    <view class="calendar-header">
+      <view class="month-selector">
+        <view class="arrow" bindtap="prevMonth">◀</view>
+        <view class="current-month">{{currentYear}}年{{currentMonth + 1}}月</view>
+        <view class="arrow" bindtap="nextMonth">▶</view>
+      </view>
+      <view class="weekday-header">
+        <view wx:for="{{['日','一','二','三','四','五','六']}}" 
+              wx:key="*this" 
+              class="weekday">{{item}}</view>
+      </view>
+    </view>
+    
+    <view class="calendar-grid">
+      <view class="calendar-day {{item.isCurrentMonth ? '' : 'other-month'}}" 
+            wx:for="{{calendarDays}}" 
+            wx:key="date">
+        <view class="day-number">{{item.day}}</view>
+        <view class="day-dishes">
+          <view class="calendar-dish" 
+                wx:for="{{item.dishes}}" 
+                wx:for-item="dish" 
+                wx:key="id">
+            <image src="{{dish.image}}" mode="aspectFit"/>
+            <text>{{dish.name}}</text>
+            <view class="delete-btn" 
+                  catchtap="removeDish" 
+                  data-date="{{item.fullDate}}" 
+                  data-dish-id="{{dish.id}}">×</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="date-picker-modal" wx:if="{{showDatePicker}}">
+  <view class="modal-content">
+    <view class="modal-header">
+      <text>选择日期</text>
+      <view class="close-btn" bindtap="hideDatePicker">×</view>
+    </view>
+    <view class="date-options">
+      <view class="date-option" 
+            wx:for="{{quickDates}}" 
+            wx:key="date"
+            bindtap="addDishToDate"
+            data-date="{{item.fullDate}}">
+        {{item.label}}
+      </view>
+    </view>
+  </view>
+</view> 

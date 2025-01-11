@@ -1,0 +1,439 @@
+.container {
+  padding: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin: 20rpx 0;
+}
+
+.ingredients-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20rpx;
+  padding: 10rpx;
+}
+
+.ingredients-scroll {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.ingredient-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10rpx;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  width: 140rpx;
+  flex-shrink: 0;
+}
+
+.ingredient-item.selected {
+  background-color: #e6f3ff;
+  border-color: #1890ff;
+}
+
+.ingredient-item image {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 10rpx;
+  border-radius: 60rpx;
+  object-fit: cover;
+}
+
+.ingredient-item text {
+  font-size: 24rpx;
+}
+
+.dishes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  padding: 0 10rpx;
+}
+
+.dish-item {
+  width: calc(100% - 20rpx);
+  padding: 20rpx;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.dish-content {
+  display: flex;
+  gap: 20rpx;
+}
+
+.dish-image-container {
+  flex-shrink: 0;
+  width: 240rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dish-image-container image {
+  width: 240rpx;
+  height: 240rpx;
+  border-radius: 8rpx;
+  object-fit: cover;
+}
+
+.dish-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-top: 12rpx;
+  text-align: center;
+}
+
+.dish-description {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 280rpx; /* 图片高度 + 名称高度 */
+  overflow: hidden;
+}
+
+.description-title {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+  flex-shrink: 0;
+}
+
+.cooking-steps {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.step-item {
+  display: flex;
+  margin-bottom: 12rpx;
+  line-height: 1.4;
+}
+
+.step-number {
+  color: #1890ff;
+  margin-right: 8rpx;
+  flex-shrink: 0;
+}
+
+.step-text {
+  color: #333;
+  font-size: 26rpx;
+}
+
+/* 自定义滚动条样式 */
+.cooking-steps::-webkit-scrollbar {
+  width: 6rpx;
+  background: transparent;
+}
+
+.cooking-steps::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 3rpx;
+}
+
+.calendar-section {
+  margin-top: 30rpx;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+}
+
+.calendar-header {
+  padding: 20rpx;
+  background: #f8f8f8;
+}
+
+.month-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10rpx 0;
+}
+
+.current-month {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.arrow {
+  padding: 10rpx 20rpx;
+  color: #666;
+}
+
+.weekday-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  padding: 10rpx 0;
+  border-bottom: 1px solid #eee;
+}
+
+.weekday {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2rpx;
+  background: #f5f5f5;
+  padding: 2rpx;
+}
+
+.calendar-day {
+  background: white;
+  min-height: 180rpx;
+  padding: 10rpx;
+  position: relative;
+}
+
+.other-month {
+  background: #fafafa;
+  opacity: 0.6;
+}
+
+.day-number {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.day-dishes {
+  display: flex;
+  flex-direction: column;
+  gap: 5rpx;
+}
+
+.calendar-dish {
+  display: flex;
+  align-items: center;
+  background: #f8f8f8;
+  border-radius: 4rpx;
+  padding: 4rpx;
+  font-size: 20rpx;
+}
+
+.calendar-dish image {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 4rpx;
+  margin-right: 4rpx;
+}
+
+.calendar-dish text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.delete-btn {
+  width: 30rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  text-align: center;
+  font-size: 20rpx;
+}
+
+.date-picker-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 8rpx;
+  width: 80%;
+  max-width: 600rpx;
+}
+
+.modal-header {
+  padding: 20rpx;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  border-radius: 20rpx;
+  background: #f5f5f5;
+}
+
+.date-options {
+  padding: 20rpx;
+}
+
+.date-option {
+  padding: 20rpx;
+  margin: 10rpx 0;
+  border: 1px solid #eee;
+  border-radius: 8rpx;
+  text-align: center;
+  background: #f8f8f8;
+}
+
+.date-option:active {
+  background: #e6f3ff;
+}
+
+.date-option:last-child {
+  border-bottom: none;
+}
+
+.loading-tips, .empty-tips {
+  width: 100%;
+  text-align: center;
+  padding: 40rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.loading-tips {
+  color: #666;
+}
+
+.ingredient-category {
+  margin-bottom: 30rpx;
+}
+
+.category-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10rpx 20rpx;
+  font-size: 28rpx;
+  color: #666;
+  border-bottom: 1px solid #eee;
+}
+
+.category-title::after {
+  content: '滑动查看更多';
+  font-size: 24rpx;
+  color: #999;
+}
+
+.confirm-button {
+  margin: 30rpx auto;
+  width: 80%;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background-color: #1890ff;
+  color: white;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+}
+
+.confirm-button:active {
+  background-color: #096dd9;
+}
+
+.ingredients-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.ingredients-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.action-bar {
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+  margin: 30rpx 0;
+  gap: 20rpx;
+}
+
+.generator-selector {
+  flex: 1;
+  max-width: 300rpx;
+}
+
+.generator-picker {
+  background: #f5f5f5;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.picker-arrow {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.confirm-button {
+  margin: 0;
+  flex: 2;
+}
+
+.video-preview {
+  margin-top: 16rpx;
+  padding: 16rpx;
+  background: #f8f8f8;
+  border-radius: 8rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.video-preview:active {
+  background: #f0f0f0;
+}
+
+.video-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.video-platform {
+  font-size: 22rpx;
+  color: #1890ff;
+  margin-bottom: 4rpx;
+}
+
+.video-title {
+  font-size: 24rpx;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.video-icon {
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  color: #1890ff;
+  font-size: 24rpx;
+  flex-shrink: 0;
+  margin-left: 12rpx;
+} 
