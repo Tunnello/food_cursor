@@ -1,31 +1,7 @@
-// 读取环境变量的辅助函数
-const getEnvConfig = () => {
-  try {
-    const fs = wx.getFileSystemManager()
-    const envContent = fs.readFileSync('.env', 'utf8')
-    const config = {}
-    
-    envContent.split('\n').forEach(line => {
-      if (line && !line.startsWith('#')) {
-        const [key, value] = line.split('=')
-        if (key && value) {
-          config[key.trim()] = value.trim()
-        }
-      }
-    })
-    
-    return config
-  } catch (error) {
-    console.error('读取环境配置失败:', error)
-    return {}
-  }
-}
+import config from './config'
 
 App({
   onLaunch: function () {
-    // 读取环境变量
-    const envConfig = getEnvConfig()
-    
     this.globalData = {
       ingredients: {
         vegetables: [
@@ -121,7 +97,7 @@ App({
           headers: {
             'X-Source': 'openapi',
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${envConfig.YUANQI_API_TOKEN || ''}`,
+            'Authorization': `Bearer ${config.YUANQI_API_TOKEN}`,
             'Access-Control-Allow-Origin': '*'
           },
           assistant_id: 'XgIHxucOhOTJ',
@@ -132,7 +108,7 @@ App({
           url: 'https://api.coze.cn/v3/chat',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${envConfig.COZE_API_TOKEN || ''}`,
+            'Authorization': `Bearer ${config.COZE_API_TOKEN}`,
             'Access-Control-Allow-Origin': '*'
           },
           bot_id: '7456266070911909907',

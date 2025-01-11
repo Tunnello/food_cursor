@@ -39,11 +39,13 @@ git clone [项目地址]
 ```
 
 2. 配置环境变量
-- 复制 `.env.example` 到 `.env`
-- 在 `.env` 文件中配置你的 API 密钥：
-```
-COZE_API_TOKEN=你的字节扣子AI密钥
-YUANQI_API_TOKEN=你的腾讯元器AI密钥
+- 复制 `config.example.js` 到 `config.js`
+- 在 `config.js` 文件中配置你的 API 密钥：
+```javascript
+const config = {
+  YUANQI_API_TOKEN: '你的腾讯元器AI密钥',
+  COZE_API_TOKEN: '你的字节扣子AI密钥'
+}
 ```
 
 3. 使用微信开发者工具打开项目 
